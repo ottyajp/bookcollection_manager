@@ -3,7 +3,6 @@ require 'amazon/ecs'
 
 inifile = IniFile.load('./paapi.conf')
 
-Amazon::Ecs.debug = true;
 Amazon::Ecs.options = {
   associate_tag: inifile['keys']['tag'],
   AWS_access_key_id: inifile['keys']['aki'],
@@ -11,7 +10,8 @@ Amazon::Ecs.options = {
   country: :jp
 }
 
-res = Amazon::Ecs.item_lookup(ARGV[0], response_group: 'Small')
+res = Amazon::Ecs.item_lookup(ARGV[0], response_group: 'Medium,Images')
 
 p res.items.map {|item| item.get('ItemAttributes/Title') }
 p res.items.map {|item| item.get('ItemAttributes/Author') }
+p res.items.map {|item| item.get('MediumImage/URL') }

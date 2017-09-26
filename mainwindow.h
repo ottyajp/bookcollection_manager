@@ -29,9 +29,14 @@ private slots:
 
     void scrape_amazon();
 
+signals:
+    void scrape();
+
 private:
     Ui::MainWindow *ui;
     QWebEngineView *view;
+    QWebEngineView *image;
+    QString splitBracket(QString str);
 };
 
 #endif // MAINWINDOW_H

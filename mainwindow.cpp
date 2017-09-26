@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     view = new QWebEngineView(this);
     ui->layout->addWidget(view);
+    image = new QWebEngineView(this);
+    ui->detailLayout->addWidget(image);
+    connect(this, SIGNAL(scrape()), this, SLOT(scrape_amazon()));
 }
 
 MainWindow::~MainWindow()
@@ -20,14 +23,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    system("timeout 2 cat /dev/ttyACM0 > out.txt");
+    system("timeout 1 cat /dev/ttyACM0 > out.txt");
     ifstream fs("./out.txt");
     string str;
     getline(fs, str);
     QString isbn13 = QString::fromStdString(str).replace(QRegularExpression("\r"),"");
     ui->isbn->setText(isbn13);
+    emit this->scrape();
     this->view->setUrl("https://www.amazon.co.jp/dp/product/"+isbn13to10(isbn13));
-    connect(this->view, SIGNAL(loadFinished(bool)), this, SLOT(scrape_amazon()));
     fs.close();
 }
 
@@ -51,10 +54,18 @@ void MainWindow::scrape_amazon(){
     string com = "ruby ./paapi.rb " + isbn13to10(ui->isbn->text()).toStdString() + " >out.txt 2>err.txt";
     system(com.c_str());
     ifstream fs("./out.txt");
-    QString title, author;
+    QString title, author, image_url;
     string str;
-    getline(fs, str); title = QString::fromStdString(str);
-    getline(fs, str); author = QString::fromStdString(str);
+    getline(fs, str); title = splitBracket(QString::fromStdString(str));
+    getline(fs, str); author = splitBracket(QString::fromStdString(str));
+    getline(fs, str); image_url = splitBracket(QString::fromStdString(str));
+    qDebug()<<image_url;
+    image->setUrl(image_url);
     ui->title->setText(title);
     ui->author->setText(author);
+}
+
+QString MainWindow::splitBracket(QString str){
+    return str.replace(0,2,"").replace(
+                QRegularExpression("\"]$"),"");
 }
