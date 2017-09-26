@@ -49,7 +49,6 @@ void MainWindow::on_action_Quit_triggered()
 
 void MainWindow::scrape_amazon(){
     string com = "ruby ./paapi.rb " + isbn13to10(ui->isbn->text()).toStdString() + " >out.txt 2>err.txt";
-    qDebug()<<QString::fromStdString(com);
     system(com.c_str());
     ifstream fs("./out.txt");
     QString title, author;
