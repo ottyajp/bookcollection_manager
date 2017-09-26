@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     view = new QWebEngineView(this);
     ui->layout->addWidget(view);
     image = new QWebEngineView(this);
+    image->setMaximumSize(150,150);
     ui->detailLayout->addWidget(image);
     connect(this, SIGNAL(scrape()), this, SLOT(scrape_amazon()));
 }
