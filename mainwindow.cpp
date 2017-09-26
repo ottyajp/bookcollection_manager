@@ -58,6 +58,14 @@ void MainWindow::on_action_Quit_triggered()
 void MainWindow::scrape_amazon(){
     string com = "ruby ./paapi.rb " + isbn13to10(ui->isbn->text()).toStdString() + " >out.txt 2>err.txt";
     system(com.c_str());
+    ifstream errfs("./err.txt");
+    string errstr;
+    while(getline(errfs,errstr)){
+        if(errstr.find("too quickly") != string::npos){
+            ui->title->setText("Amazon API says 'too quickly'. please retry!");
+            return;
+        }
+    }
     ifstream fs("./out.txt");
     QString title, author, image_url;
     string str;
