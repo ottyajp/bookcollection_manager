@@ -30,7 +30,26 @@
      </widget>
     </item>
     <item row="1" column="0" colspan="2">
-     <layout class="QHBoxLayout" name="layout"/>
+     <layout class="QHBoxLayout" name="layout">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="title">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="author">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

@@ -27,6 +27,8 @@ private slots:
 
     void on_action_Quit_triggered();
 
+    void scrape_amazon();
+
 private:
     Ui::MainWindow *ui;
     QWebEngineView *view;
