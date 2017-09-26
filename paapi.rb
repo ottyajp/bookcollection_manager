@@ -1,9 +1,13 @@
+require 'inifile'
 require 'amazon/ecs'
 
+inifile = IniFile.load('./paapi.conf')
+
+Amazon::Ecs.debug = true;
 Amazon::Ecs.options = {
-  associate_tag: 'ottyajp-22',
-  AWS_access_key_id: 'AKIAJ5F7RBN4POBHT5ZA',
-  AWS_secret_key: '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',
+  associate_tag: inifile['keys']['tag'],
+  AWS_access_key_id: inifile['keys']['aki'],
+  AWS_secret_key: inifile['keys']['sek'],
   country: :jp
 }
 
