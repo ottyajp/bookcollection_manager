@@ -28,6 +28,10 @@ void MainWindow::on_pushButton_clicked()
     string str;
     getline(fs, str);
     QString isbn13 = QString::fromStdString(str).replace(QRegularExpression("\r"),"");
+    if(isbn13.length() != 13){
+        ui->isbn->setText("error");
+        return;
+    }
     ui->isbn->setText(isbn13);
     emit this->scrape();
     this->view->setUrl("https://www.amazon.co.jp/dp/product/"+isbn13to10(isbn13));
