@@ -40,3 +40,8 @@ QString isbn13to10(QString isbn13){
     qDebug()<<isbn10;
     return isbn10;
 }
+
+void MainWindow::on_action_Quit_triggered()
+{
+    this->close();
+}
