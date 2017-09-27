@@ -89,3 +89,8 @@ void MainWindow::on_addButton_clicked()
     item->setText(2, ui->author->text());
     item->setIcon(0, QIcon("./icon/" + filename));
 }
+
+void MainWindow::on_getDetailAmazon_clicked()
+{
+    emit this->scrape();
+}

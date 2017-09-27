@@ -33,6 +33,8 @@ private slots:
 
     void on_addButton_clicked();
 
+    void on_getDetailAmazon_clicked();
+
 signals:
     void scrape();
 
