@@ -38,8 +38,6 @@ signals:
 
 private:
     Ui::MainWindow *ui;
-    QWebEngineView *view;
-    QWebEngineView *image;
     QString splitBracket(QString str);
 };
 

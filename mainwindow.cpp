@@ -9,11 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    view = new QWebEngineView(this);
-    ui->layout->addWidget(view);
-    image = new QWebEngineView(this);
-    image->setMaximumSize(150,150);
-    ui->detailLayout->addWidget(image);
     connect(this, SIGNAL(scrape()), this, SLOT(scrape_amazon()));
 }
 
@@ -35,7 +30,7 @@ void MainWindow::on_pushButton_clicked()
     }
     ui->isbn->setText(isbn13);
     emit this->scrape();
-    this->view->setUrl("https://www.amazon.co.jp/dp/product/"+isbn13to10(isbn13));
+    ui->view->setUrl("https://www.amazon.co.jp/dp/product/"+isbn13to10(isbn13));
     fs.close();
 }
 
@@ -72,8 +67,7 @@ void MainWindow::scrape_amazon(){
     getline(fs, str); title = splitBracket(QString::fromStdString(str));
     getline(fs, str); author = splitBracket(QString::fromStdString(str));
     getline(fs, str); image_url = splitBracket(QString::fromStdString(str));
-    qDebug()<<image_url;
-    this->image->setUrl(QUrl(image_url));
+    ui->image->setUrl(QUrl(image_url));
     ui->sumbnail->setText(image_url);
     ui->title->setText(title);
     ui->author->setText(author);
