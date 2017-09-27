@@ -164,10 +164,20 @@
          </layout>
         </item>
         <item row="1" column="0">
-         <widget class="QTreeWidget" name="treeWidget">
+         <widget class="QTreeWidget" name="tree">
           <column>
            <property name="text">
-            <string notr="true">1</string>
+            <string notr="true">icon</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>title</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>author</string>
            </property>
           </column>
          </widget>
