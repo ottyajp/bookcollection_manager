@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QLabel>
+#include <QLineEdit>
 #include <QTreeWidgetItem>
 #include <cstdlib>
 #include <fstream>
