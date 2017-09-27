@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>675</width>
-    <height>469</height>
+    <width>828</width>
+    <height>656</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,11 +75,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="title">
-                  <property name="text">
-                   <string>TextLabel</string>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="title"/>
                 </item>
                 <item>
                  <spacer name="horizontalSpacer">
@@ -106,11 +102,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="author">
-                  <property name="text">
-                   <string>TextLabel</string>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="author"/>
                 </item>
                 <item>
                  <spacer name="horizontalSpacer_2">
@@ -163,7 +155,7 @@
                 <item>
                  <widget class="QLabel" name="sumbnail">
                   <property name="text">
-                   <string>TextLabel</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -205,11 +197,23 @@
                 <height>150</height>
                </size>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>150</height>
+               </size>
+              </property>
              </widget>
             </item>
            </layout>
           </widget>
           <widget class="QTreeWidget" name="tree">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <column>
             <property name="text">
              <string notr="true">icon</string>
@@ -249,7 +253,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>675</width>
+     <width>828</width>
      <height>19</height>
     </rect>
    </property>
