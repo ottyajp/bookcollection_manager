@@ -14,62 +14,66 @@
         <translation>読み込み(&amp;R)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="30"/>
         <source>Input</source>
-        <translation>(ISBNコード)</translation>
+        <translation type="vanished">(ISBNコード)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="56"/>
+        <location filename="mainwindow.ui" line="57"/>
+        <source>get &amp;detail(amazon)</source>
+        <translation>情報取得:Amazon(&amp;D)</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="83"/>
         <source>book detail</source>
         <translation>本の詳細</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="73"/>
+        <location filename="mainwindow.ui" line="106"/>
         <source>Title</source>
         <translation>書籍タイトル</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="100"/>
+        <location filename="mainwindow.ui" line="139"/>
         <source>Author</source>
         <translation>著者</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="127"/>
+        <location filename="mainwindow.ui" line="166"/>
         <source>&amp;Add</source>
         <translation>追加(&amp;A)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="151"/>
+        <location filename="mainwindow.ui" line="190"/>
         <source>sumbnail URL</source>
         <translation>サムネイルURL</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="224"/>
+        <location filename="mainwindow.ui" line="263"/>
         <source>title</source>
         <translation>書籍タイトル</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="229"/>
+        <location filename="mainwindow.ui" line="268"/>
         <source>author</source>
         <translation>著者</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="239"/>
+        <location filename="mainwindow.ui" line="278"/>
         <source>check webview</source>
         <translation>チェック</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="262"/>
+        <location filename="mainwindow.ui" line="301"/>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="279"/>
+        <location filename="mainwindow.ui" line="318"/>
         <source>&amp;Quit</source>
         <translation>終了(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="282"/>
+        <location filename="mainwindow.ui" line="321"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
