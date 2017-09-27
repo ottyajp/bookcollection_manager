@@ -73,7 +73,8 @@ void MainWindow::scrape_amazon(){
     getline(fs, str); author = splitBracket(QString::fromStdString(str));
     getline(fs, str); image_url = splitBracket(QString::fromStdString(str));
     qDebug()<<image_url;
-    image->setUrl(image_url);
+    this->image->setUrl(QUrl(image_url));
+    ui->sumbnail->setText(image_url);
     ui->title->setText(title);
     ui->author->setText(author);
 }
@@ -81,4 +82,16 @@ void MainWindow::scrape_amazon(){
 QString MainWindow::splitBracket(QString str){
     return str.replace(0,2,"").replace(
                 QRegularExpression("\"]$"),"");
+}
+
+void MainWindow::on_addButton_clicked()
+{
+    QString filename = ui->sumbnail->text().replace(
+                QRegularExpression(".+/"),"");
+    string com = "wget " + ui->sumbnail->text().toStdString() + " -O ./icon/" + filename.toStdString();
+    system(com.c_str());
+    auto *item = new QTreeWidgetItem(ui->tree);
+    item->setText(1, ui->title->text());
+    item->setText(2, ui->author->text());
+    item->setIcon(0, QIcon("./icon/" + filename));
 }

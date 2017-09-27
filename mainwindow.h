@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QHBoxLayout>
 #include <QtWebEngineWidgets/QWebEngineView>
+#include <QLabel>
+#include <QTreeWidgetItem>
 #include <cstdlib>
 #include <fstream>
 #include <QDebug>
@@ -28,6 +30,8 @@ private slots:
     void on_action_Quit_triggered();
 
     void scrape_amazon();
+
+    void on_addButton_clicked();
 
 signals:
     void scrape();
