@@ -255,7 +255,7 @@
            </property>
            <column>
             <property name="text">
-             <string notr="true">icon</string>
+             <string notr="true">ISBN</string>
             </property>
            </column>
            <column>

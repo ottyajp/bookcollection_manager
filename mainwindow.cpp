@@ -87,6 +87,7 @@ void MainWindow::on_addButton_clicked()
     auto *item = new QTreeWidgetItem(ui->tree);
     item->setText(1, ui->title->text());
     item->setText(2, ui->author->text());
+    item->setText(0, ui->isbn->text());
     item->setIcon(0, QIcon("./icon/" + filename));
 }
 
