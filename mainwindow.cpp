@@ -19,11 +19,29 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    system("timeout 1 cat /dev/ttyACM0 > out.txt");
-    ifstream fs("./out.txt");
-    string str;
-    getline(fs, str);
-    QString isbn13 = QString::fromStdString(str).replace(QRegularExpression("\r"),"");
+    QSerialPort port;
+    QString portName = "/dev/ttyACM0";
+    port.setPortName(portName);
+    int baudRate = QSerialPort::Baud9600;
+    port.setBaudRate(baudRate);
+    if (!port.open(QIODevice::ReadOnly)) {
+        qDebug()<<QObject::tr("Failed to open port %1, error: %2")
+               .arg(portName).arg(port.error());
+    }
+    QByteArray readData = port.readAll();
+    while (port.waitForReadyRead(1000)) {
+        readData.append(port.readAll());
+    }
+    if(port.error() == QSerialPort::ReadError) {
+        qDebug()<<QObject::tr("Failed to read from port %1, error: %2")
+                  .arg(portName).arg(port.errorString());
+    } else if (port.error() == QSerialPort::TimeoutError && readData.isEmpty()) {
+        qDebug()<<QObject::tr("No data was currently available for readin from port %1")
+                  .arg(portName);
+    }
+    qDebug()<<readData;
+
+    QString isbn13 = QString(readData).replace(QRegularExpression("\r"), "");
     if(isbn13.length() != 13){
         ui->isbn->setText("error");
         return;
@@ -31,7 +49,6 @@ void MainWindow::on_pushButton_clicked()
     ui->isbn->setText(isbn13);
     emit this->scrape();
     ui->view->setUrl("https://www.amazon.co.jp/dp/product/"+isbn13to10(isbn13));
-    fs.close();
 }
 
 QString isbn13to10(QString isbn13){

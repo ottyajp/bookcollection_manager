@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <QDebug>
+#include <QSerialPort>
+#include <QSerialPortInfo>
 
 QString isbn13to10(QString isbn13);
 
