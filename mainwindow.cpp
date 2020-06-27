@@ -10,6 +10,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(this, SIGNAL(scrape()), this, SLOT(scrape_amazon()));
+    qnam = new QNetworkAccessManager();
+    // メイドインアビス1
+    //ui->isbn->setText("9784812483800");
+    // 「集合と位相」をなぜ学ぶのか
+    //ui->isbn->setText("9784774196121");
+    //ui->view->setUrl("https://api.openbd.jp/v1/get?isbn="+ui->isbn->text());
 }
 
 MainWindow::~MainWindow()
@@ -47,8 +53,8 @@ void MainWindow::on_pushButton_clicked()
         return;
     }
     ui->isbn->setText(isbn13);
+    ui->view->setUrl("https://api.openbd.jp/v1/get?isbn=" + isbn13);
     emit this->scrape();
-    ui->view->setUrl("https://www.amazon.co.jp/dp/product/"+isbn13to10(isbn13));
 }
 
 QString isbn13to10(QString isbn13){
@@ -68,6 +74,14 @@ void MainWindow::on_action_Quit_triggered()
 }
 
 void MainWindow::scrape_amazon(){
+    QUrl url = ui->view->url();
+    qDebug()<<ui->view->url();
+    QNetworkRequest req(ui->view->url());
+    req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+    reply = qnam->get(req);
+    connect(reply, SIGNAL(finished()), this, SLOT(fetchFinished()));
+
+    /*
     string com = "ruby ./paapi.rb " + isbn13to10(ui->isbn->text()).toStdString() + " >out.txt 2>err.txt";
     system(com.c_str());
     ifstream errfs("./err.txt");
@@ -86,6 +100,30 @@ void MainWindow::scrape_amazon(){
     getline(fs, str); image_url = splitBracket(QString::fromStdString(str));
     ui->image->setUrl(QUrl(image_url));
     ui->sumbnail->setText(image_url);
+    ui->title->setText(title);
+    ui->author->setText(author);
+    */
+}
+
+void MainWindow::fetchFinished() {
+    QJsonDocument json(QJsonDocument::fromJson(reply->readAll()));
+    QJsonObject baseObject = json.array().at(0).toObject().value("onix").toObject();
+    QJsonObject descriptiveDetail = baseObject.value("DescriptiveDetail").toObject();
+
+    QString title = descriptiveDetail.value("TitleDetail").toObject()
+            .value("TitleElement").toObject()
+            .value("TitleText").toObject()
+            .value("content").toString();
+    QString author = descriptiveDetail.value("Contributor").toArray().at(0).toObject()
+            .value("PersonName").toObject()
+            .value("content").toString();
+    QString cover = baseObject.value("CollateralDetail").toObject()
+            .value("SupportingResource").toArray().at(0).toObject()
+            .value("ResourceVersion").toArray().at(0).toObject()
+            .value("ResourceLink").toString();
+
+    ui->image->setUrl(QUrl(cover));
+    ui->sumbnail->setText(cover);
     ui->title->setText(title);
     ui->author->setText(author);
 }

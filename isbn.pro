@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui webenginewidgets serialport
+QT       += core gui webenginewidgets network serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

@@ -12,6 +12,12 @@
 #include <QDebug>
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 QString isbn13to10(QString isbn13);
 
@@ -38,12 +44,16 @@ private slots:
 
     void on_getDetailAmazon_clicked();
 
+    void fetchFinished();
+
 signals:
     void scrape();
 
 private:
     Ui::MainWindow *ui;
     QString splitBracket(QString str);
+    QNetworkAccessManager *qnam;
+    QNetworkReply *reply;
 };
 
 #endif // MAINWINDOW_H
