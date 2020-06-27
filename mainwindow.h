@@ -51,7 +51,6 @@ signals:
 
 private:
     Ui::MainWindow *ui;
-    QString splitBracket(QString str);
     QNetworkAccessManager *qnam;
     QNetworkReply *reply;
 };

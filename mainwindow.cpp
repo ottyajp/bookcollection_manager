@@ -103,11 +103,6 @@ void MainWindow::fetchFinished() {
     ui->author->setText(author);
 }
 
-QString MainWindow::splitBracket(QString str){
-    return str.replace(0,2,"").replace(
-                QRegularExpression("\"]$"),"");
-}
-
 void MainWindow::on_addButton_clicked()
 {
     QString filename = ui->thumbnail->text().replace(
