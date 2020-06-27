@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(this, SIGNAL(scrape()), this, SLOT(scrape_amazon()));
+    connect(this, SIGNAL(scrape()), this, SLOT(scrape_openbd()));
     qnam = new QNetworkAccessManager();
     // メイドインアビス1
     //ui->isbn->setText("9784812483800");
@@ -72,7 +72,7 @@ void MainWindow::on_action_Quit_triggered()
     this->close();
 }
 
-void MainWindow::scrape_amazon(){
+void MainWindow::scrape_openbd(){
     QUrl url = ui->view->url();
     QNetworkRequest req(ui->view->url());
     req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
@@ -98,7 +98,7 @@ void MainWindow::fetchFinished() {
             .value("ResourceLink").toString();
 
     ui->image->setUrl(QUrl(cover));
-    ui->sumbnail->setText(cover);
+    ui->thumbnail->setText(cover);
     ui->title->setText(title);
     ui->author->setText(author);
 }
@@ -110,9 +110,9 @@ QString MainWindow::splitBracket(QString str){
 
 void MainWindow::on_addButton_clicked()
 {
-    QString filename = ui->sumbnail->text().replace(
+    QString filename = ui->thumbnail->text().replace(
                 QRegularExpression(".+/"),"");
-    string com = "wget " + ui->sumbnail->text().toStdString() + " -O ./icon/" + filename.toStdString();
+    string com = "wget " + ui->thumbnail->text().toStdString() + " -O ./icon/" + filename.toStdString();
     system(com.c_str());
     auto *item = new QTreeWidgetItem(ui->tree);
     item->setText(1, ui->title->text());
@@ -121,7 +121,7 @@ void MainWindow::on_addButton_clicked()
     item->setIcon(0, QIcon("./icon/" + filename));
 }
 
-void MainWindow::on_getDetailAmazon_clicked()
+void MainWindow::on_getDetailOpenBD_clicked()
 {
-    emit this->scrape();
+    emit this->scrape_openbd();
 }

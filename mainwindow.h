@@ -38,11 +38,11 @@ private slots:
 
     void on_action_Quit_triggered();
 
-    void scrape_amazon();
+    void scrape_openbd();
 
     void on_addButton_clicked();
 
-    void on_getDetailAmazon_clicked();
+    void on_getDetailOpenBD_clicked();
 
     void fetchFinished();
 

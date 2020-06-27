@@ -52,9 +52,9 @@
     <item row="1" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_11">
       <item>
-       <widget class="QPushButton" name="getDetailAmazon">
+       <widget class="QPushButton" name="getDetailOpenBD">
         <property name="text">
-         <string>get &amp;detail(amazon)</string>
+         <string>get &amp;detail(OpenBD)</string>
         </property>
        </widget>
       </item>
@@ -88,7 +88,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QHBoxLayout" name="horizontalLayout_10">
             <item>
              <layout class="QVBoxLayout" name="verticalLayout">
@@ -187,12 +187,12 @@
                 <item>
                  <widget class="QLabel" name="label_4">
                   <property name="text">
-                   <string>sumbnail URL</string>
+                   <string>thumbnail URL</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="sumbnail">
+                 <widget class="QLabel" name="thumbnail">
                   <property name="text">
                    <string/>
                   </property>
@@ -229,7 +229,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QWebEngineView" name="image" native="true">
+             <widget class="QWebEngineView" name="image">
               <property name="minimumSize">
                <size>
                 <width>150</width>
@@ -279,7 +279,7 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
-         <widget class="QWebEngineView" name="view" native="true"/>
+         <widget class="QWebEngineView" name="view"/>
         </item>
        </layout>
       </widget>
@@ -293,7 +293,7 @@
      <x>0</x>
      <y>0</y>
      <width>828</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -327,7 +327,7 @@
   <customwidget>
    <class>QWebEngineView</class>
    <extends>QWidget</extends>
-   <header>qwebengineview.h</header>
+   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
