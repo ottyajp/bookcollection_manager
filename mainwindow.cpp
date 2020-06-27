@@ -99,11 +99,16 @@ void MainWindow::fetchFinished() {
             .value("ResourceVersion").toArray().at(0).toObject()
             .value("ResourceLink").toString();
 
-    QNetworkRequest req(cover);
-    coverReply = qnam->get(req);
-    connect(coverReply, SIGNAL(finished()), this, SLOT(coverFetchFinished()));
+    if (cover.length() == 0) {
+        ui->image->setText("No Image.");
+        ui->thumbnail->setText(tr("no image url provided."));
+    } else {
+        QNetworkRequest req(cover);
+        coverReply = qnam->get(req);
+        connect(coverReply, SIGNAL(finished()), this, SLOT(coverFetchFinished()));
+        ui->thumbnail->setText(cover);
+    }
 
-    ui->thumbnail->setText(cover);
     ui->title->setText(title);
     ui->author->setText(author);
 }
