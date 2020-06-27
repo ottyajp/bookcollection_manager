@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(this, SIGNAL(scrape()), this, SLOT(scrape_openbd()));
-    ui->image->setScaledContents(true);
+    ui->image->setAlignment(Qt::AlignCenter);
     qnam = new QNetworkAccessManager();
     // メイドインアビス1
     //ui->isbn->setText("9784812483800");
