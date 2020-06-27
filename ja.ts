@@ -19,8 +19,9 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="57"/>
-        <source>get &amp;detail(amazon)</source>
-        <translation>情報取得:Amazon(&amp;D)</translation>
+        <source>get &amp;detail(OpenBD)</source>
+        <oldsource>get &amp;detail(amazon)</oldsource>
+        <translation>情報取得:OpenBD(&amp;D)</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="83"/>
@@ -44,7 +45,8 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="190"/>
-        <source>sumbnail URL</source>
+        <source>thumbnail URL</source>
+        <oldsource>sumbnail URL</oldsource>
         <translation>サムネイルURL</translation>
     </message>
     <message>
@@ -76,6 +78,24 @@
         <location filename="mainwindow.ui" line="321"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="mainwindow.cpp" line="34"/>
+        <source>Failed to open port %1, error: %2</source>
+        <translation>オープンに失敗しました。ポート：%1, エラー：%2</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="42"/>
+        <source>Failed to read from port %1, error: %2</source>
+        <translation>読み取りに失敗しました。ポート：%1, エラー：%2</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="45"/>
+        <source>No data was currently available for readin from port %1</source>
+        <translation>有効なデータが読み取れませんでした。ポート：%1</translation>
     </message>
 </context>
 </TS>
