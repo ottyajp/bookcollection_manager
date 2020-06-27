@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(this, SIGNAL(scrape()), this, SLOT(scrape_openbd()));
+    ui->image->setScaledContents(true);
     qnam = new QNetworkAccessManager();
     // メイドインアビス1
     //ui->isbn->setText("9784812483800");
@@ -76,12 +77,13 @@ void MainWindow::scrape_openbd(){
     QUrl url = ui->view->url();
     QNetworkRequest req(ui->view->url());
     req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-    reply = qnam->get(req);
-    connect(reply, SIGNAL(finished()), this, SLOT(fetchFinished()));
+    detailReply = qnam->get(req);
+    connect(detailReply, SIGNAL(finished()), this, SLOT(fetchFinished()));
 }
 
 void MainWindow::fetchFinished() {
-    QJsonDocument json(QJsonDocument::fromJson(reply->readAll()));
+    QJsonDocument json(QJsonDocument::fromJson(detailReply->readAll()));
+    detailReply->deleteLater();
     QJsonObject baseObject = json.array().at(0).toObject().value("onix").toObject();
     QJsonObject descriptiveDetail = baseObject.value("DescriptiveDetail").toObject();
 
@@ -97,26 +99,32 @@ void MainWindow::fetchFinished() {
             .value("ResourceVersion").toArray().at(0).toObject()
             .value("ResourceLink").toString();
 
-    ui->image->setUrl(QUrl(cover));
+    QNetworkRequest req(cover);
+    coverReply = qnam->get(req);
+    connect(coverReply, SIGNAL(finished()), this, SLOT(coverFetchFinished()));
+
     ui->thumbnail->setText(cover);
     ui->title->setText(title);
     ui->author->setText(author);
 }
 
+void MainWindow::coverFetchFinished()
+{
+    coverPixMap = new QPixmap;
+    coverPixMap->loadFromData(coverReply->readAll());
+    ui->image->setPixmap(*coverPixMap);
+}
+
 void MainWindow::on_addButton_clicked()
 {
-    QString filename = ui->thumbnail->text().replace(
-                QRegularExpression(".+/"),"");
-    string com = "wget " + ui->thumbnail->text().toStdString() + " -O ./icon/" + filename.toStdString();
-    system(com.c_str());
     auto *item = new QTreeWidgetItem(ui->tree);
     item->setText(1, ui->title->text());
     item->setText(2, ui->author->text());
     item->setText(0, ui->isbn->text());
-    item->setIcon(0, QIcon("./icon/" + filename));
+    item->setIcon(0, QIcon(ui->image->pixmap(Qt::ReturnByValue)));
 }
 
 void MainWindow::on_getDetailOpenBD_clicked()
 {
-    emit this->scrape_openbd();
+    emit this->scrape();
 }

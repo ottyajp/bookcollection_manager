@@ -229,18 +229,15 @@
              </layout>
             </item>
             <item>
-             <widget class="QWebEngineView" name="image">
+             <widget class="QLabel" name="image">
               <property name="minimumSize">
                <size>
                 <width>150</width>
                 <height>150</height>
                </size>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>150</width>
-                <height>150</height>
-               </size>
+              <property name="text">
+               <string>Cover Image</string>
               </property>
              </widget>
             </item>

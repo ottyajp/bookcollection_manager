@@ -46,13 +46,17 @@ private slots:
 
     void fetchFinished();
 
+    void coverFetchFinished();
+
 signals:
     void scrape();
 
 private:
     Ui::MainWindow *ui;
     QNetworkAccessManager *qnam;
-    QNetworkReply *reply;
+    QNetworkReply *detailReply;
+    QNetworkReply *coverReply;
+    QPixmap *coverPixMap;
 };
 
 #endif // MAINWINDOW_H
