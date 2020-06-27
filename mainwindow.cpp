@@ -45,7 +45,6 @@ void MainWindow::on_pushButton_clicked()
         qDebug()<<QObject::tr("No data was currently available for readin from port %1")
                   .arg(portName);
     }
-    qDebug()<<readData;
 
     QString isbn13 = QString(readData).replace(QRegularExpression("\r"), "");
     if(isbn13.length() != 13){
@@ -75,34 +74,10 @@ void MainWindow::on_action_Quit_triggered()
 
 void MainWindow::scrape_amazon(){
     QUrl url = ui->view->url();
-    qDebug()<<ui->view->url();
     QNetworkRequest req(ui->view->url());
     req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
     reply = qnam->get(req);
     connect(reply, SIGNAL(finished()), this, SLOT(fetchFinished()));
-
-    /*
-    string com = "ruby ./paapi.rb " + isbn13to10(ui->isbn->text()).toStdString() + " >out.txt 2>err.txt";
-    system(com.c_str());
-    ifstream errfs("./err.txt");
-    string errstr;
-    while(getline(errfs,errstr)){
-        if(errstr.find("too quickly") != string::npos){
-            ui->title->setText("Amazon API says 'too quickly'. please retry!");
-            return;
-        }
-    }
-    ifstream fs("./out.txt");
-    QString title, author, image_url;
-    string str;
-    getline(fs, str); title = splitBracket(QString::fromStdString(str));
-    getline(fs, str); author = splitBracket(QString::fromStdString(str));
-    getline(fs, str); image_url = splitBracket(QString::fromStdString(str));
-    ui->image->setUrl(QUrl(image_url));
-    ui->sumbnail->setText(image_url);
-    ui->title->setText(title);
-    ui->author->setText(author);
-    */
 }
 
 void MainWindow::fetchFinished() {
