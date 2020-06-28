@@ -55,37 +55,42 @@
         <translation>Cover Image</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="266"/>
+        <location filename="mainwindow.ui" line="269"/>
         <source>title</source>
         <translation>書籍タイトル</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="271"/>
+        <location filename="mainwindow.ui" line="274"/>
         <source>author</source>
         <translation>著者</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="281"/>
+        <location filename="mainwindow.ui" line="284"/>
         <source>check webview</source>
         <translation>チェック</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="304"/>
+        <location filename="mainwindow.ui" line="307"/>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="321"/>
+        <location filename="mainwindow.ui" line="325"/>
+        <source>&amp;Config</source>
+        <translation>コンフィグ(&amp;C)</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="330"/>
         <source>&amp;Quit</source>
         <translation>終了(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="324"/>
+        <location filename="mainwindow.ui" line="333"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="104"/>
+        <location filename="mainwindow.cpp" line="133"/>
         <source>no image url provided.</source>
         <translation>画像URLが取得できませんでした。</translation>
     </message>
@@ -93,19 +98,57 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="mainwindow.cpp" line="35"/>
+        <location filename="mainwindow.cpp" line="64"/>
         <source>Failed to open port %1, error: %2</source>
         <translation>オープンに失敗しました。ポート：%1, エラー：%2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="43"/>
+        <location filename="mainwindow.cpp" line="72"/>
         <source>Failed to read from port %1, error: %2</source>
         <translation>読み取りに失敗しました。ポート：%1, エラー：%2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="46"/>
+        <location filename="mainwindow.cpp" line="75"/>
         <source>No data was currently available for readin from port %1</source>
         <translation>有効なデータが読み取れませんでした。ポート：%1</translation>
+    </message>
+</context>
+<context>
+    <name>config</name>
+    <message>
+        <location filename="config.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="config.ui" line="22"/>
+        <source>Input options</source>
+        <translation>入力設定</translation>
+    </message>
+    <message>
+        <location filename="config.ui" line="32"/>
+        <source>&amp;port</source>
+        <translation>ポート(&amp;P)</translation>
+    </message>
+    <message>
+        <location filename="config.ui" line="42"/>
+        <source>baud &amp;rate</source>
+        <translation>ボーレート(&amp;R)</translation>
+    </message>
+    <message>
+        <location filename="config.ui" line="82"/>
+        <source>Data store options</source>
+        <translation>保存設定</translation>
+    </message>
+    <message>
+        <location filename="config.ui" line="90"/>
+        <source>&amp;DB file path</source>
+        <translation>DBファイル(&amp;D)</translation>
+    </message>
+    <message>
+        <location filename="config.ui" line="103"/>
+        <source>&amp;Browse</source>
+        <translation>開く(&amp;B)</translation>
     </message>
 </context>
 </TS>

@@ -213,7 +213,7 @@ void MainWindow::on_tree_itemActivated(QTreeWidgetItem *item)
     if (!icon.isNull()) {
         ui->image->setPixmap(icon.pixmap(QSize(300, 600)));
     } else {
-        ui->image->setText(tr("No Image."));
+        ui->image->setText("No Image.");
     }
 }
 
