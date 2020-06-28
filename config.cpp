@@ -16,13 +16,23 @@ config::config(QWidget *parent) :
     ui->baudRateCombo->addItem("115200", QSerialPort::Baud115200);
 
     set = new QSettings("settings.ini", QSettings::IniFormat);
-    // device port
-    ui->devicePort->setText(set->value("devicePort").toString());
-    // baud rate
-    int index = ui->baudRateCombo->findData(set->value("baudRate"));
-    ui->baudRateCombo->setCurrentIndex(index);
-    // db file path
-    ui->dbFilePath->setText(set->value("dbFilePath").toString());
+    if (set->value("baudRate").toString().length() == 0) {
+        // device port
+        ui->devicePort->setText("/dev/ttyACM0");
+        // baud rate
+        int index = ui->baudRateCombo->findData(QSerialPort::Baud9600);
+        ui->baudRateCombo->setCurrentIndex(index);
+        // db file path
+        ui->dbFilePath->setText("./data.sqlite3");
+    } else {
+        // device port
+        ui->devicePort->setText(set->value("devicePort").toString());
+        // baud rate
+        int index = ui->baudRateCombo->findData(set->value("baudRate"));
+        ui->baudRateCombo->setCurrentIndex(index);
+        // db file path
+        ui->dbFilePath->setText(set->value("dbFilePath").toString());
+    }
 }
 
 config::~config()
