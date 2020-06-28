@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    set = new QSettings("settings.ini", QSettings::IniFormat);
     connect(this, SIGNAL(scrape()), this, SLOT(scrape_openbd()));
     ui->image->setAlignment(Qt::AlignCenter);
     qnam = new QNetworkAccessManager();
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // DB初期化
     connectionName = "db";
     db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
-    db.setDatabaseName("./data.sqlite3");
+    db.setDatabaseName(set->value("dbFilePath").toString());
     if (!db.open()) {
         qDebug()<<db.lastError();
     }
@@ -56,9 +57,9 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     QSerialPort port;
-    QString portName = "/dev/ttyACM0";
+    QString portName = set->value("devicePort").toString();
     port.setPortName(portName);
-    int baudRate = QSerialPort::Baud9600;
+    int baudRate = set->value("baudRate").toInt();
     port.setBaudRate(baudRate);
     if (!port.open(QIODevice::ReadOnly)) {
         qDebug()<<QObject::tr("Failed to open port %1, error: %2")

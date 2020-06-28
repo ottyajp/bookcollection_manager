@@ -24,6 +24,7 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QBuffer>
+#include <QSettings>
 
 QString isbn13to10(QString isbn13);
 
@@ -70,6 +71,7 @@ private:
     QPixmap *coverPixMap;
     QString connectionName;
     QSqlDatabase db;
+    QSettings *set;
 };
 
 #endif // MAINWINDOW_H
