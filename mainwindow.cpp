@@ -216,3 +216,10 @@ void MainWindow::on_tree_itemActivated(QTreeWidgetItem *item)
         ui->image->setText(tr("No Image."));
     }
 }
+
+void MainWindow::on_action_Config_triggered()
+{
+    config *config = new class config(this);
+    config->setWindowModality(Qt::ApplicationModal);
+    config->show();
+}

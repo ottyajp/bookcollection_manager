@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "config.h"
+
 #include <QMainWindow>
 #include <QHBoxLayout>
 #include <QtWebEngineWidgets/QWebEngineView>
@@ -54,6 +56,8 @@ private slots:
     void coverFetchFinished();
 
     void on_tree_itemActivated(QTreeWidgetItem *item);
+
+    void on_action_Config_triggered();
 
 signals:
     void scrape();

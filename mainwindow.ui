@@ -306,6 +306,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="action_Config"/>
     <addaction name="action_Quit"/>
    </widget>
    <addaction name="menu_File"/>
@@ -319,6 +320,11 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_Config">
+   <property name="text">
+    <string>&amp;Config</string>
+   </property>
+  </action>
   <action name="action_Quit">
    <property name="text">
     <string>&amp;Quit</string>
