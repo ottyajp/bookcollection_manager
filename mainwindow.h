@@ -18,6 +18,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QBuffer>
 
 QString isbn13to10(QString isbn13);
 
@@ -32,6 +36,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void loadItems();
 
 private slots:
     void on_pushButton_clicked();
@@ -57,6 +62,8 @@ private:
     QNetworkReply *detailReply;
     QNetworkReply *coverReply;
     QPixmap *coverPixMap;
+    QString connectionName;
+    QSqlDatabase db;
 };
 
 #endif // MAINWINDOW_H

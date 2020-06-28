@@ -17,10 +17,55 @@ MainWindow::MainWindow(QWidget *parent) :
     // 「集合と位相」をなぜ学ぶのか
     //ui->isbn->setText("9784774196121");
     //ui->view->setUrl("https://api.openbd.jp/v1/get?isbn="+ui->isbn->text());
+
+    // DB初期化
+    connectionName = "db";
+    db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
+    db.setDatabaseName("./data.sqlite3");
+    if (!db.open()) {
+        qDebug()<<db.lastError();
+    }
+    // テーブル作成
+    QSqlQuery query(db);
+    if (query.prepare("create table data("
+                      "  id integer primary key autoincrement"
+                      ", title text"
+                      ", author text"
+                      ", cover blob"
+                      ")")) {
+        if (!query.exec()) {
+            qDebug()<<query.lastError();
+            qDebug()<<query.lastQuery()<<query.boundValues();
+        }
+    } else {
+        qDebug()<<query.lastError();
+    }
+    // SELECT
+    if (query.prepare("select id, title, author, cover"
+                      " from data")) {
+        if (query.exec()) {
+            while (query.next()) {
+                int id = query.value(0).toInt();
+                QString title = query.value(1).toString();
+                QString author = query.value(2).toString();
+                QString cover = query.value(3).toString();
+                qDebug()<<QString("id(%1), title(%2), author(%3), cover(%4)")
+                          .arg(id).arg(title).arg(author).arg(cover);
+            }
+        } else {
+            qDebug()<<query.lastError();
+            qInfo()<<query.lastQuery()<<query.boundValues();
+        }
+    } else {
+        qDebug()<<query.lastError();
+    }
+    loadItems();
 }
 
 MainWindow::~MainWindow()
 {
+    db.close();
+    QSqlDatabase::removeDatabase(connectionName);
     delete ui;
 }
 
@@ -127,8 +172,48 @@ void MainWindow::on_addButton_clicked()
     item->setText(2, ui->author->text());
     item->setText(0, ui->isbn->text());
     item->setIcon(0, QIcon(ui->image->pixmap(Qt::ReturnByValue)));
+
+    QSqlQuery query(db);
+    if (query.prepare("insert into data (title, author, cover)"
+                      " values(?, ?, ?)")) {
+        query.addBindValue(ui->title->text());
+        query.addBindValue(ui->author->text());
+        QByteArray bArray;
+        QBuffer buffer(&bArray);
+        buffer.open(QIODevice::WriteOnly);
+        ui->image->pixmap(Qt::ReturnByValue).save(&buffer, "PNG");
+        qDebug()<<ui->image->pixmap(Qt::ReturnByValue);
+        qDebug()<<bArray.toHex();
+        query.addBindValue(bArray);
+        if (query.exec()) {
+            qDebug()<<query.lastInsertId().toULongLong() << "added";
+        } else {
+            qDebug()<<query.lastError();
+            qDebug()<<query.lastQuery()<<query.boundValues();
+        }
+    } else {
+        qDebug()<<query.lastError();
+    }
 }
 
+void MainWindow::loadItems()
+{
+    QSqlQuery query(db);
+    if (query.prepare("select id, title, author, cover"
+                      " from data")) {
+        if (query.exec()) {
+            while (query.next()) {
+                auto *item = new QTreeWidgetItem(ui->tree);
+                item->setText(1, query.value(1).toString());
+                item->setText(2, query.value(2).toString());
+                item->setText(0, query.value(0).toString());
+                QPixmap pixmap;
+                pixmap.loadFromData(query.value(3).toByteArray());
+                item->setIcon(0, QIcon(pixmap));
+            }
+        }
+    }
+}
 void MainWindow::on_getDetailOpenBD_clicked()
 {
     emit this->scrape();
