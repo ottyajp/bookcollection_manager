@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "coverviewer.h"
+#include "Db.h"
 
 #include <QMainWindow>
 #include <QHBoxLayout>
@@ -21,9 +22,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlError>
 #include <QBuffer>
 #include <QSettings>
 #include <QMessageBox>
@@ -76,8 +74,7 @@ private:
     QNetworkReply *detailReply;
     QNetworkReply *coverReply;
     QPixmap *coverPixMap;
-    QString connectionName;
-    QSqlDatabase db;
+    Db *db;
     QSettings *set;
 };
 

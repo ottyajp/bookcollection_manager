@@ -24,35 +24,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //ui->isbn->setText("9784774196121");
     //ui->view->setUrl("https://api.openbd.jp/v1/get?isbn="+ui->isbn->text());
 
-    // DB初期化
-    connectionName = "db";
-    db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
-    db.setDatabaseName(set->value("dbFilePath").toString());
-    if (!db.open()) {
-        qDebug()<<db.lastError();
-    }
-    // テーブル作成
-    QSqlQuery query(db);
-    if (query.prepare("create table data("
-                      "  isbn text primary key"
-                      ", title text"
-                      ", author text"
-                      ", cover blob"
-                      ")")) {
-        if (!query.exec()) {
-            qDebug()<<query.lastError();
-            qDebug()<<query.lastQuery()<<query.boundValues();
-        }
-    } else {
-        qDebug()<<query.lastError();
-    }
+    db = new class Db(set->value("dbFilePath").toString());
     loadItems();
 }
 
 MainWindow::~MainWindow()
 {
-    db.close();
-    QSqlDatabase::removeDatabase(connectionName);
+    delete db;
     delete ui;
 }
 
@@ -156,66 +134,40 @@ void MainWindow::coverFetchFinished()
 
 void MainWindow::on_addButton_clicked()
 {
-    QSqlQuery query(db);
-    if (query.prepare("insert into data (isbn, title, author, cover)"
-                      " values(?, ?, ?, ?)")) {
-        query.addBindValue(ui->isbn->text());
-        query.addBindValue(ui->title->text());
-        query.addBindValue(ui->author->text());
-        query.addBindValue(this->uiImageToByteArray());
-        if (query.exec()) {
-            qDebug()<<query.lastInsertId().toULongLong() << "added";
-            // treeへの追加
-            auto *item = new QTreeWidgetItem(ui->tree);
-            item->setText(1, ui->title->text());
-            item->setText(2, ui->author->text());
-            item->setText(0, ui->isbn->text());
-            item->setIcon(0, QIcon(ui->image->pixmap(Qt::ReturnByValue)));
-            item->setTextAlignment(0, Qt::AlignRight);
-            ui->registeredLabel->setText(tr("registered"));
-        } else {
-            qDebug()<<query.lastError();
-            qDebug()<<query.lastQuery()<<query.boundValues();
-            if (query.lastError().nativeErrorCode() == "19") {
-                QMessageBox box;
-                box.setText(tr("The ISBN code you attempted is already registered.\n"
-                               "Overwrite it?"));
-                box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                int ret = box.exec();
-                if (ret == QMessageBox::Yes) {
-                    QSqlQuery updateQuery(db);
-                    if (updateQuery.prepare("update data"
-                                      " set title = ?"
-                                      ", author = ?"
-                                      ", cover = ?"
-                                      " where isbn = ?")) {
-                        updateQuery.addBindValue(ui->title->text());
-                        updateQuery.addBindValue(ui->author->text());
-                        updateQuery.addBindValue(this->uiImageToByteArray());
-                        updateQuery.addBindValue(ui->isbn->text());
-                        if (updateQuery.exec()) {
-                            qDebug()<<updateQuery.lastInsertId().toULongLong() << "updated";
-                            // treeの再読込
-                            QTreeWidgetItemIterator it(ui->tree);
-                            while (*it) {
-                                delete *it;
-                                ++it;
-                            }
-                            ui->tree->clear();
-                            loadItems();
-                        } else {
-                            qDebug()<<updateQuery.lastError();
-                            qDebug()<<updateQuery.lastQuery()<<updateQuery.boundValues();
-                        }
-                    } else {
-                        qDebug()<<updateQuery.lastError();
-                    }
+    Entity e(ui->isbn->text(),
+             ui->title->text(),
+             ui->author->text(),
+             this->uiImageToByteArray());
+    int insertRet = db->insert(e);
+    if (insertRet == 0) {
+        // treeへの追加
+        auto *item = new QTreeWidgetItem(ui->tree);
+        item->setText(0, e.getIsbn());
+        QPixmap pixmap;
+        pixmap.loadFromData(e.getCover());
+        item->setIcon(0, QIcon(pixmap));
+        item->setText(1, e.getTitle());
+        item->setText(2, e.getAuthor());
+    } else if (insertRet == 19) {
+        QMessageBox box;
+        box.setText(tr("The ISBN code you attempted is already registered.\n"
+                       "Overwrite it?"));
+        box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        int ret = box.exec();
+        if (ret == QMessageBox::Yes) {
+            int updateRet = db->update(e);
+            if (updateRet == 0) {
+                // treeの再読込
+                QTreeWidgetItemIterator it(ui->tree);
+                while (*it) {
+                    delete *it;
+                    ++it;
                 }
-                return;
+                ui->tree->clear();
+                loadItems();
             }
         }
-    } else {
-        qDebug()<<query.lastError();
+        return;
     }
 }
 
@@ -230,23 +182,18 @@ QByteArray MainWindow::uiImageToByteArray()
 
 void MainWindow::loadItems()
 {
-    QSqlQuery query(db);
-    if (query.prepare("select isbn, title, author, cover"
-                      " from data")) {
-        if (query.exec()) {
-            while (query.next()) {
-                auto *item = new QTreeWidgetItem(ui->tree);
-                item->setText(1, query.value("title").toString());
-                item->setText(2, query.value("author").toString());
-                item->setText(0, query.value("isbn").toString());
-                item->setTextAlignment(0, Qt::AlignRight);
-                QPixmap pixmap;
-                pixmap.loadFromData(query.value("cover").toByteArray());
-                item->setIcon(0, QIcon(pixmap));
-            }
-        }
+    auto list = db->selectAll();
+    for (auto it = list.begin(); it != list.end(); ++it) {
+        auto *item = new QTreeWidgetItem(ui->tree);
+        item->setText(0, (*it).getIsbn());
+        QPixmap pixmap;
+        pixmap.loadFromData((*it).getCover());
+        item->setIcon(0, QIcon(pixmap));
+        item->setText(1, (*it).getTitle());
+        item->setText(2, (*it).getAuthor());
     }
 }
+
 void MainWindow::on_getDetailOpenBD_clicked()
 {
     emit this->scrape();
@@ -277,24 +224,17 @@ void MainWindow::openCoverViewer(QPoint pos)
 {
     QTreeWidgetItem *item = ui->tree->itemAt(pos);
     QPixmap *pixmap = new QPixmap();
-    QSqlQuery query(db);
-    if (query.prepare("select cover"
-                      " from data where isbn=?")) {
-        query.addBindValue(item->text(0));
-        if (query.exec()) {
-            while (query.next()) {
-                if (query.value("cover").toByteArray().size() != 0) {
-                    pixmap->loadFromData(query.value("cover").toByteArray());
-                } else {
-                    QMessageBox box;
-                    box.setText(tr("no cover image saved."));
-                    box.setStandardButtons(QMessageBox::Ok);
-                    box.exec();
-                    return;
-                }
-            }
-        }
+    QByteArray ba = db->getCover(item->text(0));
+    if (ba.size() != 0) {
+        pixmap->loadFromData(ba);
+    } else {
+        QMessageBox box;
+        box.setText(tr("no cover image saved."));
+        box.setStandardButtons(QMessageBox::Ok);
+        box.exec();
+        return;
     }
+
     coverViewer *cv = new class coverViewer(this);
     cv->setWindowModality(Qt::ApplicationModal);
     cv->setPixmap(pixmap);

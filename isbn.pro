@@ -28,12 +28,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         config.cpp \
         coverviewer.cpp \
+        Db.cpp \
+        Entity.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
         config.h \
         coverviewer.h \
+        Db.h \
+        Entity.h \
         mainwindow.h
 
 FORMS += \
