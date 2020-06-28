@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(scrape()), this, SLOT(scrape_openbd()));
     ui->image->setAlignment(Qt::AlignCenter);
     qnam = new QNetworkAccessManager();
+    ui->tree->setColumnWidth(0, 140);
+    ui->tree->setColumnWidth(1, 500);
     // メイドインアビス1
     //ui->isbn->setText("9784812483800");
     // 「集合と位相」をなぜ学ぶのか
