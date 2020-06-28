@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QSqlQuery query(db);
     if (query.prepare("create table data("
                       "  id integer primary key autoincrement"
+                      ", isbn text"
                       ", title text"
                       ", author text"
                       ", cover blob"
@@ -36,25 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
         if (!query.exec()) {
             qDebug()<<query.lastError();
             qDebug()<<query.lastQuery()<<query.boundValues();
-        }
-    } else {
-        qDebug()<<query.lastError();
-    }
-    // SELECT
-    if (query.prepare("select id, title, author, cover"
-                      " from data")) {
-        if (query.exec()) {
-            while (query.next()) {
-                int id = query.value("id").toInt();
-                QString title = query.value("title").toString();
-                QString author = query.value("author").toString();
-                QString cover = query.value("cover").toString();
-                qDebug()<<QString("id(%1), title(%2), author(%3), cover(%4)")
-                          .arg(id).arg(title).arg(author).arg(cover);
-            }
-        } else {
-            qDebug()<<query.lastError();
-            qInfo()<<query.lastQuery()<<query.boundValues();
         }
     } else {
         qDebug()<<query.lastError();
@@ -174,16 +156,15 @@ void MainWindow::on_addButton_clicked()
     item->setIcon(0, QIcon(ui->image->pixmap(Qt::ReturnByValue)));
 
     QSqlQuery query(db);
-    if (query.prepare("insert into data (title, author, cover)"
-                      " values(?, ?, ?)")) {
+    if (query.prepare("insert into data (isbn, title, author, cover)"
+                      " values(?, ?, ?, ?)")) {
+        query.addBindValue(ui->isbn->text());
         query.addBindValue(ui->title->text());
         query.addBindValue(ui->author->text());
         QByteArray bArray;
         QBuffer buffer(&bArray);
         buffer.open(QIODevice::WriteOnly);
         ui->image->pixmap(Qt::ReturnByValue).save(&buffer, "PNG");
-        qDebug()<<ui->image->pixmap(Qt::ReturnByValue);
-        qDebug()<<bArray.toHex();
         query.addBindValue(bArray);
         if (query.exec()) {
             qDebug()<<query.lastInsertId().toULongLong() << "added";
@@ -199,14 +180,14 @@ void MainWindow::on_addButton_clicked()
 void MainWindow::loadItems()
 {
     QSqlQuery query(db);
-    if (query.prepare("select id, title, author, cover"
+    if (query.prepare("select id, isbn, title, author, cover"
                       " from data")) {
         if (query.exec()) {
             while (query.next()) {
                 auto *item = new QTreeWidgetItem(ui->tree);
                 item->setText(1, query.value("title").toString());
                 item->setText(2, query.value("author").toString());
-                item->setText(0, query.value("id").toString());
+                item->setText(0, query.value("isbn").toString());
                 QPixmap pixmap;
                 pixmap.loadFromData(query.value("cover").toByteArray());
                 item->setIcon(0, QIcon(pixmap));
