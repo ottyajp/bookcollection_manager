@@ -171,6 +171,16 @@
         <source>&amp;Browse</source>
         <translation>開く(&amp;B)</translation>
     </message>
+    <message>
+        <location filename="config.cpp" line="60"/>
+        <source>Choose DB file path</source>
+        <translation>DBファイルの保存先を選んでください</translation>
+    </message>
+    <message>
+        <location filename="config.cpp" line="62"/>
+        <source>sqlite3 file (*.sqlite3)</source>
+        <translation>sqlite3ファイル (*.sqlite3)</translation>
+    </message>
 </context>
 <context>
     <name>coverViewer</name>
