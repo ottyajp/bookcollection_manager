@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "config.h"
+#include "coverviewer.h"
 
 #include <QMainWindow>
 #include <QHBoxLayout>
@@ -59,6 +60,8 @@ private slots:
     void on_tree_itemActivated(QTreeWidgetItem *item);
 
     void on_action_Config_triggered();
+
+    void openCoverViewer(QPoint pos);
 
 signals:
     void scrape();

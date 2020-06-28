@@ -27,15 +27,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         config.cpp \
+        coverviewer.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
         config.h \
+        coverviewer.h \
         mainwindow.h
 
 FORMS += \
         config.ui \
+        coverviewer.ui \
         mainwindow.ui
 
 RESOURCES += \

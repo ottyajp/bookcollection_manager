@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(scrape()), this, SLOT(scrape_openbd()));
     ui->image->setAlignment(Qt::AlignCenter);
     qnam = new QNetworkAccessManager();
+    ui->tree->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tree, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(openCoverViewer(QPoint)));
     ui->tree->setColumnWidth(0, 140);
     ui->tree->setColumnWidth(1, 500);
     // メイドインアビス1
@@ -226,4 +229,24 @@ void MainWindow::on_action_Config_triggered()
     config *config = new class config(this);
     config->setWindowModality(Qt::ApplicationModal);
     config->show();
+}
+
+void MainWindow::openCoverViewer(QPoint pos)
+{
+    QTreeWidgetItem *item = ui->tree->itemAt(pos);
+    QPixmap *pixmap = new QPixmap();
+    QSqlQuery query(db);
+    if (query.prepare("select cover"
+                      " from data where isbn=?")) {
+        query.addBindValue(item->text(0));
+        if (query.exec()) {
+            while (query.next()) {
+                pixmap->loadFromData(query.value("cover").toByteArray());
+            }
+        }
+    }
+    coverViewer *cv = new class coverViewer(this);
+    cv->setWindowModality(Qt::ApplicationModal);
+    cv->setPixmap(pixmap);
+    cv->show();
 }
