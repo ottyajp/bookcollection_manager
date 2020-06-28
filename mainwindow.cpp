@@ -150,6 +150,7 @@ void MainWindow::coverFetchFinished()
 {
     coverPixMap = new QPixmap;
     coverPixMap->loadFromData(coverReply->readAll());
+    coverReply->deleteLater();
     ui->image->setPixmap(*coverPixMap);
 }
 
