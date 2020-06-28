@@ -264,3 +264,10 @@ void MainWindow::openCoverViewer(QPoint pos)
     cv->setPixmap(pixmap);
     cv->show();
 }
+
+void MainWindow::on_thumbnail_editingFinished()
+{
+    QNetworkRequest req(ui->thumbnail->text());
+    coverReply = qnam->get(req);
+    connect(coverReply, SIGNAL(finished()), this, SLOT(coverFetchFinished()));
+}

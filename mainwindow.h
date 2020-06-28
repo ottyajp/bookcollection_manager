@@ -64,6 +64,8 @@ private slots:
 
     void openCoverViewer(QPoint pos);
 
+    void on_thumbnail_editingFinished();
+
 signals:
     void scrape();
 
