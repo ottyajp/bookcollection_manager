@@ -34,8 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // テーブル作成
     QSqlQuery query(db);
     if (query.prepare("create table data("
-                      "  id integer primary key autoincrement"
-                      ", isbn text"
+                      "  isbn text primary key"
                       ", title text"
                       ", author text"
                       ", cover blob"
@@ -156,13 +155,6 @@ void MainWindow::coverFetchFinished()
 
 void MainWindow::on_addButton_clicked()
 {
-    auto *item = new QTreeWidgetItem(ui->tree);
-    item->setText(1, ui->title->text());
-    item->setText(2, ui->author->text());
-    item->setText(0, ui->isbn->text());
-    item->setIcon(0, QIcon(ui->image->pixmap(Qt::ReturnByValue)));
-    item->setTextAlignment(0, Qt::AlignRight);
-
     QSqlQuery query(db);
     if (query.prepare("insert into data (isbn, title, author, cover)"
                       " values(?, ?, ?, ?)")) {
@@ -176,10 +168,24 @@ void MainWindow::on_addButton_clicked()
         query.addBindValue(bArray);
         if (query.exec()) {
             qDebug()<<query.lastInsertId().toULongLong() << "added";
+            // treeへの追加
+            auto *item = new QTreeWidgetItem(ui->tree);
+            item->setText(1, ui->title->text());
+            item->setText(2, ui->author->text());
+            item->setText(0, ui->isbn->text());
+            item->setIcon(0, QIcon(ui->image->pixmap(Qt::ReturnByValue)));
+            item->setTextAlignment(0, Qt::AlignRight);
             ui->registeredLabel->setText(tr("registered"));
         } else {
             qDebug()<<query.lastError();
             qDebug()<<query.lastQuery()<<query.boundValues();
+            if (query.lastError().nativeErrorCode() == "19") {
+                QMessageBox box;
+                box.setText(tr("The ISBN code you attempted is already registered."));
+                box.setStandardButtons(QMessageBox::Ok);
+                box.exec();
+                return;
+            }
         }
     } else {
         qDebug()<<query.lastError();
@@ -189,7 +195,7 @@ void MainWindow::on_addButton_clicked()
 void MainWindow::loadItems()
 {
     QSqlQuery query(db);
-    if (query.prepare("select id, isbn, title, author, cover"
+    if (query.prepare("select isbn, title, author, cover"
                       " from data")) {
         if (query.exec()) {
             while (query.next()) {

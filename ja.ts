@@ -90,23 +90,28 @@
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="89"/>
         <source>unregistered</source>
         <translation>未登録</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
+        <location filename="mainwindow.cpp" line="137"/>
         <source>no image url provided.</source>
         <translation>画像URLが取得できませんでした。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="179"/>
-        <location filename="mainwindow.cpp" line="224"/>
+        <location filename="mainwindow.cpp" line="178"/>
+        <location filename="mainwindow.cpp" line="230"/>
         <source>registered</source>
         <translation>登録済み</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="248"/>
+        <location filename="mainwindow.cpp" line="184"/>
+        <source>The ISBN code you attempted is already registered.</source>
+        <translation>登録しようとしたISBNコードは登録済みです。</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="254"/>
         <source>no cover image saved.</source>
         <translation>書影が保存されていません。</translation>
     </message>
@@ -114,17 +119,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="mainwindow.cpp" line="68"/>
+        <location filename="mainwindow.cpp" line="67"/>
         <source>Failed to open port %1, error: %2</source>
         <translation>オープンに失敗しました。ポート：%1, エラー：%2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="76"/>
+        <location filename="mainwindow.cpp" line="75"/>
         <source>Failed to read from port %1, error: %2</source>
         <translation>読み取りに失敗しました。ポート：%1, エラー：%2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="79"/>
+        <location filename="mainwindow.cpp" line="78"/>
         <source>No data was currently available for readin from port %1</source>
         <translation>有効なデータが読み取れませんでした。ポート：%1</translation>
     </message>
