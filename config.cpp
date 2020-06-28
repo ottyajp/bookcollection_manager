@@ -52,3 +52,15 @@ void config::on_buttonBox_rejected()
 {
     this->close();
 }
+
+void config::on_browseButton_clicked()
+{
+    QString path = QFileDialog::getSaveFileName(
+                this,
+                tr("Choose DB file path"),
+                "~/",
+                tr("sqlite3 file (*.sqlite3)"));
+    if (path.size() != 0) {
+        ui->dbFilePath->setText(path);
+    }
+}
