@@ -162,11 +162,7 @@ void MainWindow::on_addButton_clicked()
         query.addBindValue(ui->isbn->text());
         query.addBindValue(ui->title->text());
         query.addBindValue(ui->author->text());
-        QByteArray bArray;
-        QBuffer buffer(&bArray);
-        buffer.open(QIODevice::WriteOnly);
-        ui->image->pixmap(Qt::ReturnByValue).save(&buffer, "PNG");
-        query.addBindValue(bArray);
+        query.addBindValue(this->uiImageToByteArray());
         if (query.exec()) {
             qDebug()<<query.lastInsertId().toULongLong() << "added";
             // treeへの追加
@@ -182,15 +178,54 @@ void MainWindow::on_addButton_clicked()
             qDebug()<<query.lastQuery()<<query.boundValues();
             if (query.lastError().nativeErrorCode() == "19") {
                 QMessageBox box;
-                box.setText(tr("The ISBN code you attempted is already registered."));
-                box.setStandardButtons(QMessageBox::Ok);
-                box.exec();
+                box.setText(tr("The ISBN code you attempted is already registered.\n"
+                               "Overwrite it?"));
+                box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                int ret = box.exec();
+                if (ret == QMessageBox::Yes) {
+                    QSqlQuery updateQuery(db);
+                    if (updateQuery.prepare("update data"
+                                      " set title = ?"
+                                      ", author = ?"
+                                      ", cover = ?"
+                                      " where isbn = ?")) {
+                        updateQuery.addBindValue(ui->title->text());
+                        updateQuery.addBindValue(ui->author->text());
+                        updateQuery.addBindValue(this->uiImageToByteArray());
+                        updateQuery.addBindValue(ui->isbn->text());
+                        if (updateQuery.exec()) {
+                            qDebug()<<updateQuery.lastInsertId().toULongLong() << "updated";
+                            // treeの再読込
+                            QTreeWidgetItemIterator it(ui->tree);
+                            while (*it) {
+                                delete *it;
+                                ++it;
+                            }
+                            ui->tree->clear();
+                            loadItems();
+                        } else {
+                            qDebug()<<updateQuery.lastError();
+                            qDebug()<<updateQuery.lastQuery()<<updateQuery.boundValues();
+                        }
+                    } else {
+                        qDebug()<<updateQuery.lastError();
+                    }
+                }
                 return;
             }
         }
     } else {
         qDebug()<<query.lastError();
     }
+}
+
+QByteArray MainWindow::uiImageToByteArray()
+{
+    QByteArray bArray;
+    QBuffer buffer(&bArray);
+    buffer.open(QIODevice::WriteOnly);
+    ui->image->pixmap(Qt::ReturnByValue).save(&buffer, "PNG");
+    return bArray;
 }
 
 void MainWindow::loadItems()
