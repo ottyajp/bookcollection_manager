@@ -44,71 +44,82 @@
         <translation>追加(&amp;A)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="190"/>
+        <location filename="mainwindow.ui" line="197"/>
         <source>thumbnail URL</source>
         <oldsource>sumbnail URL</oldsource>
         <translation>サムネイルURL</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="243"/>
+        <location filename="mainwindow.ui" line="250"/>
         <source>Cover Image</source>
         <translation>Cover Image</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="269"/>
+        <location filename="mainwindow.ui" line="276"/>
         <source>title</source>
         <translation>書籍タイトル</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="274"/>
+        <location filename="mainwindow.ui" line="281"/>
         <source>author</source>
         <translation>著者</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="284"/>
+        <location filename="mainwindow.ui" line="291"/>
         <source>check webview</source>
         <translation>チェック</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="307"/>
+        <location filename="mainwindow.ui" line="314"/>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="325"/>
+        <location filename="mainwindow.ui" line="332"/>
         <source>&amp;Config</source>
         <translation>コンフィグ(&amp;C)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="330"/>
+        <location filename="mainwindow.ui" line="337"/>
         <source>&amp;Quit</source>
         <translation>終了(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="333"/>
+        <location filename="mainwindow.ui" line="340"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="133"/>
+        <location filename="mainwindow.cpp" line="87"/>
+        <source>unregistered</source>
+        <translation>未登録</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="135"/>
         <source>no image url provided.</source>
         <translation>画像URLが取得できませんでした。</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="176"/>
+        <location filename="mainwindow.cpp" line="221"/>
+        <source>registered</source>
+        <translation>登録済み</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="mainwindow.cpp" line="64"/>
+        <location filename="mainwindow.cpp" line="65"/>
         <source>Failed to open port %1, error: %2</source>
         <translation>オープンに失敗しました。ポート：%1, エラー：%2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="72"/>
+        <location filename="mainwindow.cpp" line="73"/>
         <source>Failed to read from port %1, error: %2</source>
         <translation>読み取りに失敗しました。ポート：%1, エラー：%2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="75"/>
+        <location filename="mainwindow.cpp" line="76"/>
         <source>No data was currently available for readin from port %1</source>
         <translation>有効なデータが読み取れませんでした。ポート：%1</translation>
     </message>

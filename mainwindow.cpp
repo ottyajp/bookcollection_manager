@@ -84,6 +84,7 @@ void MainWindow::on_pushButton_clicked()
     }
     ui->isbn->setText(isbn13);
     ui->view->setUrl("https://api.openbd.jp/v1/get?isbn=" + isbn13);
+    ui->registeredLabel->setText(tr("unregistered"));
     emit this->scrape();
 }
 
@@ -172,6 +173,7 @@ void MainWindow::on_addButton_clicked()
         query.addBindValue(bArray);
         if (query.exec()) {
             qDebug()<<query.lastInsertId().toULongLong() << "added";
+            ui->registeredLabel->setText(tr("registered"));
         } else {
             qDebug()<<query.lastError();
             qDebug()<<query.lastQuery()<<query.boundValues();
@@ -216,6 +218,7 @@ void MainWindow::on_tree_itemActivated(QTreeWidgetItem *item)
     } else {
         ui->image->setText("No Image.");
     }
+    ui->registeredLabel->setText(tr("registered"));
 }
 
 void MainWindow::on_action_Config_triggered()
