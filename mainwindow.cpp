@@ -45,10 +45,10 @@ MainWindow::MainWindow(QWidget *parent) :
                       " from data")) {
         if (query.exec()) {
             while (query.next()) {
-                int id = query.value(0).toInt();
-                QString title = query.value(1).toString();
-                QString author = query.value(2).toString();
-                QString cover = query.value(3).toString();
+                int id = query.value("id").toInt();
+                QString title = query.value("title").toString();
+                QString author = query.value("author").toString();
+                QString cover = query.value("cover").toString();
                 qDebug()<<QString("id(%1), title(%2), author(%3), cover(%4)")
                           .arg(id).arg(title).arg(author).arg(cover);
             }
@@ -204,11 +204,11 @@ void MainWindow::loadItems()
         if (query.exec()) {
             while (query.next()) {
                 auto *item = new QTreeWidgetItem(ui->tree);
-                item->setText(1, query.value(1).toString());
-                item->setText(2, query.value(2).toString());
-                item->setText(0, query.value(0).toString());
+                item->setText(1, query.value("title").toString());
+                item->setText(2, query.value("author").toString());
+                item->setText(0, query.value("id").toString());
                 QPixmap pixmap;
-                pixmap.loadFromData(query.value(3).toByteArray());
+                pixmap.loadFromData(query.value("cover").toByteArray());
                 item->setIcon(0, QIcon(pixmap));
             }
         }
