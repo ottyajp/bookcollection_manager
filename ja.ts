@@ -9,10 +9,6 @@
         <translation>読み込み(&amp;R)</translation>
     </message>
     <message>
-        <source>Input</source>
-        <translation type="vanished">(ISBNコード)</translation>
-    </message>
-    <message>
         <location filename="mainwindow.ui" line="14"/>
         <source>Book Collection</source>
         <translation>Book Collection</translation>
@@ -29,63 +25,63 @@
         <translation>本の詳細</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="106"/>
+        <location filename="mainwindow.ui" line="108"/>
         <source>Title</source>
         <translation>書籍タイトル</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="139"/>
+        <location filename="mainwindow.ui" line="121"/>
         <source>Author</source>
         <translation>著者</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="166"/>
+        <location filename="mainwindow.ui" line="171"/>
         <source>&amp;Add</source>
         <translation>追加(&amp;A)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="197"/>
+        <location filename="mainwindow.ui" line="128"/>
         <source>thumbnail URL</source>
         <oldsource>sumbnail URL</oldsource>
         <translation>サムネイルURL</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="250"/>
+        <location filename="mainwindow.ui" line="224"/>
         <source>Cover Image</source>
         <translation>Cover Image</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="276"/>
+        <location filename="mainwindow.ui" line="250"/>
         <source>title</source>
         <translation>書籍タイトル</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="281"/>
+        <location filename="mainwindow.ui" line="255"/>
         <source>author</source>
         <translation>著者</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="291"/>
+        <location filename="mainwindow.ui" line="265"/>
         <source>check webview</source>
         <translation>チェック</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="314"/>
+        <location filename="mainwindow.ui" line="288"/>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="332"/>
+        <location filename="mainwindow.ui" line="306"/>
         <source>&amp;Config</source>
         <translation>コンフィグ(&amp;C)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="337"/>
+        <location filename="mainwindow.ui" line="311"/>
         <source>&amp;Quit</source>
         <translation>終了(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="340"/>
+        <location filename="mainwindow.ui" line="314"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -100,18 +96,20 @@
         <translation>画像URLが取得できませんでした。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="178"/>
-        <location filename="mainwindow.cpp" line="230"/>
+        <location filename="mainwindow.cpp" line="175"/>
+        <location filename="mainwindow.cpp" line="266"/>
         <source>registered</source>
         <translation>登録済み</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="184"/>
-        <source>The ISBN code you attempted is already registered.</source>
-        <translation>登録しようとしたISBNコードは登録済みです。</translation>
+        <location filename="mainwindow.cpp" line="181"/>
+        <source>The ISBN code you attempted is already registered.
+Overwrite it?</source>
+        <translation>登録しようとしたISBNコードは登録済みです。
+上書きしますか？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="254"/>
+        <location filename="mainwindow.cpp" line="290"/>
         <source>no cover image saved.</source>
         <translation>書影が保存されていません。</translation>
     </message>
