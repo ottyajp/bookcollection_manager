@@ -90,36 +90,41 @@
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="87"/>
+        <location filename="mainwindow.cpp" line="90"/>
         <source>unregistered</source>
         <translation>未登録</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="135"/>
+        <location filename="mainwindow.cpp" line="138"/>
         <source>no image url provided.</source>
         <translation>画像URLが取得できませんでした。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="176"/>
-        <location filename="mainwindow.cpp" line="221"/>
+        <location filename="mainwindow.cpp" line="179"/>
+        <location filename="mainwindow.cpp" line="224"/>
         <source>registered</source>
         <translation>登録済み</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="248"/>
+        <source>no cover image saved.</source>
+        <translation>書影が保存されていません。</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="mainwindow.cpp" line="65"/>
+        <location filename="mainwindow.cpp" line="68"/>
         <source>Failed to open port %1, error: %2</source>
         <translation>オープンに失敗しました。ポート：%1, エラー：%2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="73"/>
+        <location filename="mainwindow.cpp" line="76"/>
         <source>Failed to read from port %1, error: %2</source>
         <translation>読み取りに失敗しました。ポート：%1, エラー：%2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="76"/>
+        <location filename="mainwindow.cpp" line="79"/>
         <source>No data was currently available for readin from port %1</source>
         <translation>有効なデータが読み取れませんでした。ポート：%1</translation>
     </message>
@@ -128,8 +133,8 @@
     <name>config</name>
     <message>
         <location filename="config.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Config</source>
+        <translation>コンフィグ</translation>
     </message>
     <message>
         <location filename="config.ui" line="22"/>
@@ -160,6 +165,14 @@
         <location filename="config.ui" line="103"/>
         <source>&amp;Browse</source>
         <translation>開く(&amp;B)</translation>
+    </message>
+</context>
+<context>
+    <name>coverViewer</name>
+    <message>
+        <location filename="coverviewer.ui" line="14"/>
+        <source>cover viewer</source>
+        <translation>書影</translation>
     </message>
 </context>
 </TS>
