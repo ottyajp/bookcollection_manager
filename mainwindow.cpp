@@ -154,6 +154,7 @@ void MainWindow::on_addButton_clicked()
     item->setText(2, ui->author->text());
     item->setText(0, ui->isbn->text());
     item->setIcon(0, QIcon(ui->image->pixmap(Qt::ReturnByValue)));
+    item->setTextAlignment(0, Qt::AlignRight);
 
     QSqlQuery query(db);
     if (query.prepare("insert into data (isbn, title, author, cover)"
@@ -188,6 +189,7 @@ void MainWindow::loadItems()
                 item->setText(1, query.value("title").toString());
                 item->setText(2, query.value("author").toString());
                 item->setText(0, query.value("isbn").toString());
+                item->setTextAlignment(0, Qt::AlignRight);
                 QPixmap pixmap;
                 pixmap.loadFromData(query.value("cover").toByteArray());
                 item->setIcon(0, QIcon(pixmap));
