@@ -26,6 +26,7 @@
 #include <QtSql/QSqlError>
 #include <QBuffer>
 #include <QSettings>
+#include <QMessageBox>
 
 QString isbn13to10(QString isbn13);
 

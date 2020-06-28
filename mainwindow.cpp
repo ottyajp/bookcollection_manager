@@ -241,7 +241,15 @@ void MainWindow::openCoverViewer(QPoint pos)
         query.addBindValue(item->text(0));
         if (query.exec()) {
             while (query.next()) {
-                pixmap->loadFromData(query.value("cover").toByteArray());
+                if (query.value("cover").toByteArray().size() != 0) {
+                    pixmap->loadFromData(query.value("cover").toByteArray());
+                } else {
+                    QMessageBox box;
+                    box.setText(tr("no cover image saved."));
+                    box.setStandardButtons(QMessageBox::Ok);
+                    box.exec();
+                    return;
+                }
             }
         }
     }
