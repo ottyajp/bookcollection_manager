@@ -53,6 +53,8 @@ private slots:
 
     void coverFetchFinished();
 
+    void on_tree_itemActivated(QTreeWidgetItem *item);
+
 signals:
     void scrape();
 

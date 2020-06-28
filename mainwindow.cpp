@@ -199,3 +199,16 @@ void MainWindow::on_getDetailOpenBD_clicked()
 {
     emit this->scrape();
 }
+
+void MainWindow::on_tree_itemActivated(QTreeWidgetItem *item)
+{
+    ui->isbn->setText(item->text(0));
+    ui->title->setText(item->text(1));
+    ui->author->setText(item->text(2));
+    QIcon icon = item->icon(0);
+    if (!icon.isNull()) {
+        ui->image->setPixmap(icon.pixmap(QSize(300, 600)));
+    } else {
+        ui->image->setText(tr("No Image."));
+    }
+}
