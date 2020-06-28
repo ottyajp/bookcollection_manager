@@ -256,6 +256,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
            <column>
             <property name="text">
              <string notr="true">ISBN</string>
